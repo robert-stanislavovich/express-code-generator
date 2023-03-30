@@ -1,0 +1,102 @@
+import { Router } from 'express';
+import { buildLogger } from '../libs/log';
+import { GetListQueryType } from '../types';
+import { responseSuccess, responseFailure } from '../utils/response';
+
+const <%= modelLowerCamel %>TargetsRouter = Router();
+
+const logger = buildLogger('routes.<%= modelLowerCamel %>Targets');
+
+<%= modelLowerCamel %>Router.get('/id/:id', async (req, res) => {
+  const { method, url, params } = req;
+  const endpointInfo = `${method} ${url}`;
+  try {
+    logger.debug({ params }, endpointInfo);
+
+    const { id } = params;
+
+    const <%= modelLowerCamel %> = await getOne<%= modelUpperCamel %>Service(id);
+
+    responseSuccess(res, { <%= modelLowerCamel %> });
+  } catch (e) {
+    responseFailure(res, e, logger, endpointInfo);
+  }
+});
+
+<%= modelLowerCamel %>Router.get('/', async (req, res) => {
+  const { method, url, query } = req;
+  const endpointInfo = `${method} ${url}`;
+  try {
+    logger.debug({ query }, endpointInfo);
+
+    const { filter, limit, offset, order } =
+      query as unknown as GetListQueryType;
+
+    const { rows, count } = await get<%= modelUpperCamel %>Service({
+      filter,
+      limit,
+      offset,
+      order,
+    });
+
+    responseSuccess(res, { count, <%= modelLowerCamel %>: rows });
+  } catch (e) {
+    responseFailure(res, e, logger, endpointInfo);
+  }
+});
+
+<%= modelLowerCamel %>Router.post('/', async (req, res) => {
+  const { method, url, body } = req;
+  const endpointInfo = `${method} ${url}`;
+  try {
+    logger.debug({ body }, endpointInfo);
+
+    const { data } = body;
+
+    const <%= modelLowerCamel %> = await create<%= modelUpperCamel %>Service({
+      data,
+    });
+
+    responseSuccess(res, { <%= modelLowerCamel %> });
+  } catch (e) {
+    responseFailure(res, e, logger, endpointInfo);
+  }
+});
+
+<%= modelLowerCamel %>Router.patch('/id/:id', async (req, res) => {
+  const { method, url, params, body } = req;
+  const endpointInfo = `${method} ${url}`;
+  try {
+    logger.debug({ params }, endpointInfo);
+
+    const { id } = params;
+    const { data } = body;
+
+    const <%= modelLowerCamel %> = await update<%= modelUpperCamel %>Service({
+      id,
+      data,
+    });
+
+    responseSuccess(res, { <%= modelLowerCamel %> });
+  } catch (e) {
+    responseFailure(res, e, logger, endpointInfo);
+  }
+});
+
+<%= modelLowerCamel %>Router.delete('/id/:id', async (req, res) => {
+  const { method, url, params } = req;
+  const endpointInfo = `${method} ${url}`;
+  try {
+    logger.debug({ params }, endpointInfo);
+
+    const { id } = params;
+
+    const count = await deleteOne<%= modelUpperCamel %>Service(id);
+
+    responseSuccess(res, { count });
+  } catch (e) {
+    responseFailure(res, e, logger, endpointInfo);
+  }
+});
+
+export default <%= modelLowerCamel %>Router;

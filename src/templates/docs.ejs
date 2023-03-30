@@ -1,0 +1,121 @@
+  /<%= _filename_ %>:
+    get:
+      tags:
+        - Roles
+      summary: Get all <%= modelUpperCamel %>
+      description: Get all <%= modelUpperCamel %>
+      operationId: GetAll<%= modelUpperCamel %>
+      parameters:
+        - in: query
+          name: limit
+          required: false
+          schema:
+            oneOf:
+              - type: integer
+              - type: string
+            default: 20
+          description: number of items to be returned
+        - in: query
+          name: offset
+          required: false
+          schema:
+            default: 0
+            oneOf:
+              - type: integer
+              - type: string
+          description: skip first N numbers
+      responses:
+        200:
+          description: Returning code 200 if everything is fine
+    post:
+      tags:
+        - <%= modelUpperCamel %>
+      summary: Create <%= modelUpperCamel %>
+      description: Create <%= modelUpperCamel %>
+      operationId: create<%= modelUpperCamel %>
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: 'Example <%= modelUpperCamel %>'
+                    discription:
+                      type: string
+                      example: '<%= modelUpperCamel %> created for tests'
+                  required: [name]
+              required: ['data']
+      responses:
+        200:
+          description: Returning code 200 if everything is fine
+  /<%= _filename_ %>/id/{id}:
+    get:
+      tags:
+        - <%= modelUpperCamel %>
+      summary: Get one <%= modelUpperCamel %>
+      description: Get one <%= modelUpperCamel %>
+      operationId: GetOne<%= modelUpperCamel %>
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            example: 1a46d9c6-b5ca-49aa-b981-276f3e28b9a5
+          description: <%= modelUpperCamel %> id, format "uuid"
+      responses:
+        200:
+          description: Returning code 200 if everything is fine
+    patch:
+      tags:
+        - <%= modelUpperCamel %>
+      summary: Update one <%= modelUpperCamel %>
+      description: Update one <%= modelUpperCamel %>
+      operationId: updateOne<%= modelUpperCamel %>
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            example: 1a46d9c6-b5ca-49aa-b981-276f3e28b9a5
+          description: <%= modelUpperCamel %> id, format "uuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                      example: 'Example <%= modelUpperCamel %>'
+                    discription:
+                      type: string
+                      example: '<%= modelUpperCamel %> created for tests'
+                  required: [name]
+              required: ['data']
+      responses:
+        200:
+          description: Returning code 200 if everything is fine
+    delete:
+      tags:
+        - <%= modelUpperCamel %>
+      summary: Delete one <%= modelUpperCamel %>
+      description: Delete one <%= modelUpperCamel %>
+      operationId: deleteOne<%= modelUpperCamel %>
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: string
+            example: 1a46d9c6-b5ca-49aa-b981-276f3e28b9a5
+          description: <%= modelUpperCamel %> id, format "uuid"
+      responses:
+        200:
+          description: Returning code 200 if everything is fine

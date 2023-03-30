@@ -1,0 +1,38 @@
+import { <%= modelUpperUnderscore %> } from '../models/<%= modelUpperUnderscore %>';
+import { GetListQueryType } from '../types';
+
+export async function get<%= modelUpperCamel %>Service({
+  filter,
+  limit,
+  offset,
+  order,
+}: GetListQueryType) {
+  return await <%= modelUpperUnderscore %>.findAndCountAll({
+    where: filter,
+    limit,
+    offset,
+    order,
+  });
+}
+
+export async function getOne<%= modelUpperCamel %>Service(id: string) {
+  return await <%= modelUpperUnderscore %>.findByPk(id);
+}
+
+export async function create<%= modelUpperCamel %>Service({ data }: { data: <%= modelUpperUnderscore %>  }) {
+  return await <%= modelUpperUnderscore %>.create({ ...data });
+}
+
+export async function update<%= modelUpperCamel %>Service({
+  id,
+  data,
+}: {
+  id: string;
+  data: <%= modelUpperUnderscore %>;
+}) {
+  return await <%= modelUpperUnderscore %>.update(data, { where: { id }, returning: true });
+}
+
+export async function deleteOne<%= modelUpperCamel %>Service(id: string) {
+  return await <%= modelUpperUnderscore %>.destroy({ where: { id } });
+}
