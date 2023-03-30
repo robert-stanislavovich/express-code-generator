@@ -3,26 +3,9 @@ const path = require('path');
 const ejs = require('ejs');
 const models = require('./models-setup');
 
-function generateTemplateVariables(setup) {
-  const {
-    modelUpperCamel,
-    modelLowerCamel,
-    modelUpperUnderscore,
-    modelLowerUnderscore,
-  } = setup;
 
-  return {
-    modelUpperCamel,
-    modelLowerCamel,
-    modelUpperUnderscore,
-    modelLowerUnderscore,
-    fieldsSetup: setup.fields,
-    _filename_: setup.filename,
-  };
-}
-
-function renderTemplate(template, vars) {
-  return ejs.render(template, vars);
+function renderTemplate(template, templateVariables) {
+  return ejs.render(template, templateVariables);
 }
 
 const templateNames = ['routes/MODEL', 'services/MODEL', 'docs/docs'];
@@ -40,7 +23,7 @@ async function main() {
       filename
     } = modelSetup;
 
-    const vars = generateTemplateVariables(modelSetup);
+    const templateVariables = modelSetup;
 
     for (const tmplName of templateNames) {
       
@@ -48,7 +31,7 @@ async function main() {
           .replace(/MODEL/g, filename)
           .replace(/docs.ts/g, `${filename}.yaml`)
 
-        const rendered = await renderTemplate(templates[tmplName], vars);
+        const rendered = await renderTemplate(templates[tmplName], templateVariables);
 
         const dirname = path.dirname(resultFilename);
 

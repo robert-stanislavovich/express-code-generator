@@ -1,4 +1,4 @@
-  /<%= _filename_ %>:
+  /<%= filename %>:
     get:
       tags:
         - Roles
@@ -53,7 +53,7 @@
       responses:
         200:
           description: Returning code 200 if everything is fine
-  /<%= _filename_ %>/id/{id}:
+  /<%= filename %>/id/{id}:
     get:
       tags:
         - <%= modelUpperCamel %>
