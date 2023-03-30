@@ -25,7 +25,7 @@ function renderTemplate(template, vars) {
   return ejs.render(template, vars);
 }
 
-const templateNames = ['routes/MODEL', 'services/MODEL', 'docs'];
+const templateNames = ['routes/MODEL', 'services/MODEL', 'docs/docs'];
 
 async function main() {
   const templates = {};
@@ -36,11 +36,7 @@ async function main() {
   });
 
   for (const modelSetup of models) {
-    const {
-      modelUpperCamel,
-      modelLowerCamel,
-      modelUpperUnderscore,
-      modelLowerUnderscore,
+    const {      
       filename
     } = modelSetup;
 
@@ -50,7 +46,7 @@ async function main() {
       
         const resultFilename = `gen/${tmplName}.ts`
           .replace(/MODEL/g, filename)
-          .replace(/docs.ts/g, 'docs.yaml')
+          .replace(/docs.ts/g, `${filename}.yaml`)
 
         const rendered = await renderTemplate(templates[tmplName], vars);
 
@@ -63,7 +59,7 @@ async function main() {
     }
   }
 
-  console.log('all done');
+  console.log('CODE GENERATED');
 }
 
 main();
