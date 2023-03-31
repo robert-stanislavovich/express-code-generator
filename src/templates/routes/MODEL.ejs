@@ -3,9 +3,9 @@ import { buildLogger } from '../libs/log';
 import { GetListQueryType } from '../types';
 import { responseSuccess, responseFailure } from '../utils/response';
 
-const <%= modelLowerCamel %>TargetsRouter = Router();
+const <%= modelLowerCamel %>Router = Router();
 
-const logger = buildLogger('routes.<%= modelLowerCamel %>Targets');
+const logger = buildLogger('routes.<%= modelLowerCamel %>');
 
 <%= modelLowerCamel %>Router.get('/id/:id', async (req, res) => {
   const { method, url, params } = req;
